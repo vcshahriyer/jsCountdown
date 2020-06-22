@@ -1,4 +1,4 @@
-<style>
+    <style>
       .timer-container li,
       .timer-container-nt li {
         display: inline-block;
@@ -17,11 +17,12 @@
       }
       .timer-container li span,
       .timer-container-nt li span {
-        display: block;
+        display: flex;
         font-size: 29px;
         font-weight: bold;
-        line-height: 61px;
         margin-bottom: 10px;
+        align-items: center;
+        justify-content: center;
       }
 
       /* general styling */

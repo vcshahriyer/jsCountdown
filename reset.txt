@@ -17,11 +17,12 @@
       }
       .timer-container li span,
       .timer-container-nt li span {
-        display: block;
+        display: flex;
         font-size: 29px;
         font-weight: bold;
-        line-height: 61px;
         margin-bottom: 10px;
+        align-items: center;
+        justify-content: center;
       }
 
       /* general styling */
@@ -35,7 +36,7 @@
           Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
       }
     </style>
-    
+
     <div class="timer-container">
       <ul>
         <li><span id="hours"></span>Hours</li>
