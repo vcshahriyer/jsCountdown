@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CountDown</title>
+  </head>
+  <body>
+    <div class="timer-container">
+      <ul>
+        <li><span id="days"></span>days</li>
+        <li><span id="hours"></span>Hours</li>
+        <li><span id="minutes"></span>Minutes</li>
+        <li><span id="seconds"></span>Seconds</li>
+      </ul>
+    </div>
+    <style>
+      .timer-container li {
+        display: inline-block;
+        font-size: 1.5em;
+        list-style-type: none;
+        padding: 1em;
+        text-transform: uppercase;
+      }
+
+      .timer-container li span {
+        display: block;
+        font-size: 4.5rem;
+      }
+
+      /* general styling */
+      .timer-container {
+        color: #333;
+        margin: 0 auto;
+        padding: 0.5rem;
+        text-align: center;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+      }
+    </style>
+    <script type="text/javascript">
+      var add_minutes = function (dt, minutes) {
+        return new Date(dt.getTime() + minutes * 60001);
+      };
+      var myTimer = function (time) {
+        const second = 1000,
+          minute = second * 60,
+          hour = minute * 60,
+          day = hour * 24;
+        let countDown = add_minutes(new Date(), time);
+        const localTime = localStorage.getItem("timer");
+        if (localTime) {
+          countDown = new Date(localTime);
+        } else {
+          localStorage.setItem("timer", countDown);
+        }
+        x = setInterval(function () {
+          let now = new Date().getTime(),
+            distance = countDown - now;
+          if (distance > 0) {
+            (document.getElementById("days").innerText = Math.floor(
+              distance / day
+            )),
+              (document.getElementById("hours").innerText = Math.floor(
+                (distance % day) / hour
+              )),
+              (document.getElementById("minutes").innerText = Math.floor(
+                (distance % hour) / minute
+              )),
+              (document.getElementById("seconds").innerText = Math.floor(
+                (distance % minute) / second
+              ));
+          } else {
+            (document.getElementById("days").innerText = Math.floor(0)),
+              (document.getElementById("hours").innerText = Math.floor(0)),
+              (document.getElementById("minutes").innerText = Math.floor(0)),
+              (document.getElementById("seconds").innerText = Math.floor(0));
+          }
+          if (distance < 0) {
+            clearInterval(x);
+          }
+        }, second);
+      };
+      window.onload = function () {
+        myTimer(20);
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,95 @@
+<style>
+      .timer-container li,
+      .timer-container-nt li {
+        display: inline-block;
+        font-size: 14px;
+        list-style-type: none;
+        padding: 1em;
+        text-transform: uppercase;
+      }
+      .timer-container li span,
+      .timer-container-nt li span {
+        border: 4px solid #749553;
+        color: #749553;
+        border-radius: 50%;
+        width: 65px;
+        height: 65px;
+      }
+      .timer-container li span,
+      .timer-container-nt li span {
+        display: block;
+        font-size: 29px;
+        font-weight: bold;
+        line-height: 61px;
+        margin-bottom: 10px;
+      }
+
+      /* general styling */
+      .timer-container,
+      .timer-container-nt {
+        color: #333;
+        margin: 0 auto;
+        padding: 0.5rem;
+        text-align: center;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+      }
+    </style>
+
+    <div class="timer-container-nt">
+      <ul>
+        <li><span id="ndays"></span>days</li>
+        <li><span id="nhours"></span>Hours</li>
+        <li><span id="nminutes"></span>Minutes</li>
+        <li><span id="nseconds"></span>Seconds</li>
+      </ul>
+    </div>
+    <!-- ===================== Not reset html end ================ -->
+
+
+   <!-- ========================= Not reset ======================= -->
+    <script type="text/javascript">
+      var Nadd_minutes = function (dt, minutes) {
+        return new Date(dt.getTime() + minutes * 60001);
+      };
+      var NmyTimer = function (time) {
+        const nsecond = 1000,
+          nminute = nsecond * 60,
+          nhour = nminute * 60,
+          nday = nhour * 24;
+        let ncountDown = Nadd_minutes(new Date(), time);
+        const localTime = localStorage.getItem("timer");
+        if (localTime) {
+          ncountDown = new Date(localTime);
+        } else {
+          localStorage.setItem("timer", ncountDown);
+        }
+        y = setInterval(function () {
+          let nnow = new Date().getTime(),
+            ndistance = ncountDown - nnow;
+          if (ndistance > 0) {
+            (document.getElementById("ndays").innerText = Math.floor(
+              ndistance / nday
+            )),
+              (document.getElementById("nhours").innerText = Math.floor(
+                (ndistance % nday) / nhour
+              )),
+              (document.getElementById("nminutes").innerText = Math.floor(
+                (ndistance % nhour) / nminute
+              )),
+              (document.getElementById("nseconds").innerText = Math.floor(
+                (ndistance % nminute) / nsecond
+              ));
+          } else {
+            (document.getElementById("ndays").innerText = Math.floor(0)),
+              (document.getElementById("nhours").innerText = Math.floor(0)),
+              (document.getElementById("nminutes").innerText = Math.floor(0)),
+              (document.getElementById("nseconds").innerText = Math.floor(0));
+          }
+          if (ndistance < 0) {
+            clearInterval(y);
+          }
+        }, nsecond);
+      };
+      NmyTimer(105);
+    </script>
